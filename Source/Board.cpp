@@ -21,3 +21,42 @@ void Board::printBitBoard(u64 bitboard) {
     // print files char
     std::cout << "\n    a b c d e f g h\n\n";
 }
+// numbers make up a board filled with ones except one file
+const u64 not_a_file = 18374403900871474942ULL;
+const u64 not_h_file = 9187201950435737471ULL;
+
+u64 Board::generatePawnAttacks(int color, int square) {
+    // init empty boards
+    u64 attacks = 0ULL;
+    u64 bitboard = 0ULL;
+
+    // set piece on the board
+    setBit(bitboard, square);
+
+    // white pawns
+    if (!color)
+    {
+        if ((bitboard >> 7) & not_a_file) attacks |= (bitboard >> 7);
+        if ((bitboard >> 9) & not_h_file) attacks |= (bitboard >> 9);
+    }
+    else
+    {
+        if ((bitboard << 7) & not_h_file) attacks |= (bitboard << 7);
+        if ((bitboard << 9) & not_a_file) attacks |= (bitboard << 9);
+    }
+    return attacks;
+}
+void Board::initPawnAttacks()
+{
+    // loop over 64 board squares
+    for (int square = 0; square < 64; square++)
+    {
+        // init pawn attacks
+        _pawnAttacks[white][square] = generatePawnAttacks(white, square);
+        _pawnAttacks[black][square] = generatePawnAttacks(black, square);
+    }
+}
+
+u64 Board::getPawnAttack(int color, int square) {
+    return _pawnAttacks[color][square];
+}

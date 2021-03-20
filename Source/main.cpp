@@ -5,12 +5,12 @@
 
 int main()
 {
-    u64 bitboard = 0ULL;
     Board test;
 
-    setBit(bitboard, e4);
-    setBit(bitboard, c3);
-    setBit(bitboard, f2);
-    test.printBitBoard(bitboard);
+    test.initPawnAttacks();
+
+    // loop over 64 board squares
+    for (int square = 0; square < 64; square++)
+        test.printBitBoard(test.getPawnAttack(black, square));
     return 0;
 }
