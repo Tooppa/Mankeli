@@ -3,7 +3,7 @@
 //
 #include "Headers/Board.h"
 
-void Board::printBitBoard(u64 bitboard) {
+void Board::printBitBoard(U64 bitboard) {
     std::cout << "\n\n";
     // ranks
     for (int i = 0; i < 8; i++) {
@@ -21,14 +21,24 @@ void Board::printBitBoard(u64 bitboard) {
     // print files char
     std::cout << "\n    a b c d e f g h\n\n";
 }
-// numbers make up a board filled with ones except one file
-const u64 not_a_file = 18374403900871474942ULL;
-const u64 not_h_file = 9187201950435737471ULL;
 
-u64 Board::generatePawnAttacks(int color, int square) {
+U64 Board::generateBoardWithOneFile(int file) {
+    U64 bitboard = 0ULL;
+    for (int i = 0; i < 8; ++i) {
+        int square = i * 8 + file;
+        setBit(bitboard, square);
+    }
+    return bitboard;
+}
+
+U64 Board::generatePawnAttacks(int color, int square) {
     // init empty boards
-    u64 attacks = 0ULL;
-    u64 bitboard = 0ULL;
+    U64 attacks = 0ULL;
+    U64 bitboard = 0ULL;
+
+    // bitboard where one line is filled with ones
+    U64 aFile = generateBoardWithOneFile(A);
+    U64 hFile = generateBoardWithOneFile(H);
 
     // set piece on the board
     setBit(bitboard, square);
@@ -36,13 +46,17 @@ u64 Board::generatePawnAttacks(int color, int square) {
     // white pawns
     if (!color)
     {
-        if ((bitboard >> 7) & not_a_file) attacks |= (bitboard >> 7);
-        if ((bitboard >> 9) & not_h_file) attacks |= (bitboard >> 9);
+        if ((bitboard >> 7) & ~aFile)
+            attacks |= (bitboard >> 7);
+        if ((bitboard >> 9) & ~hFile)
+            attacks |= (bitboard >> 9);
     }
     else
     {
-        if ((bitboard << 7) & not_h_file) attacks |= (bitboard << 7);
-        if ((bitboard << 9) & not_a_file) attacks |= (bitboard << 9);
+        if ((bitboard << 7) & ~hFile)
+            attacks |= (bitboard << 7);
+        if ((bitboard << 9) & ~aFile)
+            attacks |= (bitboard << 9);
     }
     return attacks;
 }
@@ -57,6 +71,7 @@ void Board::initPawnAttacks()
     }
 }
 
-u64 Board::getPawnAttack(int color, int square) {
+U64 Board::getPawnAttack(int color, int square) {
     return _pawnAttacks[color][square];
 }
+
