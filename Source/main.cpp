@@ -7,7 +7,7 @@ int main()
 {
     Board test;
 
-    test.initPawnAttacks();
+    test.initAttacks();
 
     // loop over 64 board squares
     for (int square = 0; square < 64; square++)
