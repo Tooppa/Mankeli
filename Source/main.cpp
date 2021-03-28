@@ -5,5 +5,8 @@
 
 int main()
 {
+    Board test;
+
+    test.printBitBoard(test.generateBishopAttacks(d5));
     return 0;
 }

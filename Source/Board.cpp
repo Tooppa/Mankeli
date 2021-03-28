@@ -76,14 +76,22 @@ U64 Board::generateKnightAttacks( int square) {
     setBit(bitboard, square);
 
     // generate knight attacks
-    if ((bitboard >> 17) & ~hFile) attacks |= (bitboard >> 17);
-    if ((bitboard >> 15) & ~aFile) attacks |= (bitboard >> 15);
-    if ((bitboard >> 10) & ~hgFile) attacks |= (bitboard >> 10);
-    if ((bitboard >> 6) & ~abFile) attacks |= (bitboard >> 6);
-    if ((bitboard << 17) & ~aFile) attacks |= (bitboard << 17);
-    if ((bitboard << 15) & ~hFile) attacks |= (bitboard << 15);
-    if ((bitboard << 10) & ~abFile) attacks |= (bitboard << 10);
-    if ((bitboard << 6) & ~hgFile) attacks |= (bitboard << 6);
+    if ((bitboard >> 17) & ~hFile)
+        attacks |= (bitboard >> 17);
+    if ((bitboard >> 15) & ~aFile)
+        attacks |= (bitboard >> 15);
+    if ((bitboard >> 10) & ~hgFile)
+        attacks |= (bitboard >> 10);
+    if ((bitboard >> 6) & ~abFile)
+        attacks |= (bitboard >> 6);
+    if ((bitboard << 17) & ~aFile)
+        attacks |= (bitboard << 17);
+    if ((bitboard << 15) & ~hFile)
+        attacks |= (bitboard << 15);
+    if ((bitboard << 10) & ~abFile)
+        attacks |= (bitboard << 10);
+    if ((bitboard << 6) & ~hgFile)
+        attacks |= (bitboard << 6);
 
     return attacks;
 }
@@ -101,17 +109,47 @@ U64 Board::generateKingAttacks(int square) {
     setBit(bitboard, square);
 
     // generate king attacks
-    if (bitboard >> 8) attacks |= (bitboard >> 8);
-    if ((bitboard >> 9) & ~hFile) attacks |= (bitboard >> 9);
-    if ((bitboard >> 7) & ~aFile) attacks |= (bitboard >> 7);
-    if ((bitboard >> 1) & ~hFile) attacks |= (bitboard >> 1);
-    if (bitboard << 8) attacks |= (bitboard << 8);
-    if ((bitboard << 9) & ~aFile) attacks |= (bitboard << 9);
-    if ((bitboard << 7) & ~hFile) attacks |= (bitboard << 7);
-    if ((bitboard << 1) & ~aFile) attacks |= (bitboard << 1);
+    if (bitboard >> 8)
+        attacks |= (bitboard >> 8);
+    if ((bitboard >> 9) & ~hFile)
+        attacks |= (bitboard >> 9);
+    if ((bitboard >> 7) & ~aFile)
+        attacks |= (bitboard >> 7);
+    if ((bitboard >> 1) & ~hFile)
+        attacks |= (bitboard >> 1);
+    if (bitboard << 8)
+        attacks |= (bitboard << 8);
+    if ((bitboard << 9) & ~aFile)
+        attacks |= (bitboard << 9);
+    if ((bitboard << 7) & ~hFile)
+        attacks |= (bitboard << 7);
+    if ((bitboard << 1) & ~aFile)
+        attacks |= (bitboard << 1);
 
     return attacks;
 }
+
+U64 Board::generateBishopAttacks(int square) {
+    // init empty boards
+    U64 attacks = 0ULL;
+
+    // get rank and file
+    int rank = square / 8;
+    int file = square % 8;
+
+    // generate bishop attacks with out bits from the corners (2 -> 7 and b -> g)
+    for (int i = rank + 1, y = file + 1; i < 7 && y < 7; i++, y++)
+        attacks |= (1ULL << (i * 8 + y));
+    for (int i = rank - 1, y = file + 1; i > 0 && y < 7; i--, y++)
+        attacks |= (1ULL << (i * 8 + y));
+    for (int i = rank + 1, y = file - 1; i < 7 && y > 0; i++, y--)
+        attacks |= (1ULL << (i * 8 + y));
+    for (int i = rank - 1, y = file - 1; i > 0 && y > 0; i--, y--)
+        attacks |= (1ULL << (i * 8 + y));
+
+    return attacks;
+}
+
 
 
 void Board::initAttacks()
