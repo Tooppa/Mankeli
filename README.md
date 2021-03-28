@@ -1,2 +1,2 @@
 # Mankeli
-UCI compatible chess engine (in development).
+Chess engine (in development).
