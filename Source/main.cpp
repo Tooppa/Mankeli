@@ -5,8 +5,5 @@
 
 int main()
 {
-    Board test;
-
-    test.printBitBoard(test.generateRookAttacks(e3));
     return 0;
 }

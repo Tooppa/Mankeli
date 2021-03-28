@@ -22,6 +22,21 @@ void Board::printBitBoard(U64 bitboard) {
     std::cout << "\n    a b c d e f g h\n\n";
 }
 
+int count_bits(U64 bitboard)
+{
+    // counter
+    int count = 0;
+
+    // runs until bitboard is zero
+    while (bitboard)
+    {
+        count++;
+        // reset least significant 1st bit
+        bitboard &= bitboard - 1;
+    }
+    return count;
+}
+
 U64 Board::generateBoardWithOneFile(int file) {
     U64 bitboard = 0ULL;
     for (int i = 0; i < 8; ++i) {
@@ -147,6 +162,78 @@ U64 Board::generateBishopAttacks(int square) {
     for (int i = rank - 1, y = file - 1; i > 0 && y > 0; i--, y--)
         attacks |= (1ULL << (i * 8 + y));
 
+    return attacks;
+}
+
+// generate bishop attacks with a blocker board
+U64 bishopAttacksWithBlocker(int square, U64 block)
+{
+    // result attacks bitboard
+    U64 attacks = 0ULL;
+
+    // init target rank & files
+    int rank = square / 8;
+    int file = square % 8;
+
+    // generate bishop attacks
+    for (int r = rank + 1, f = file + 1; r <= 7 && f <= 7; r++, f++)
+    {
+        attacks |= (1ULL << (r * 8 + f));
+        if ((1ULL << (r * 8 + f)) & block) break;
+    }
+    for (int r = rank - 1, f = file + 1; r >= 0 && f <= 7; r--, f++)
+    {
+        attacks |= (1ULL << (r * 8 + f));
+        if ((1ULL << (r * 8 + f)) & block) break;
+    }
+    for (int r = rank + 1, f = file - 1; r <= 7 && f >= 0; r++, f--)
+    {
+        attacks |= (1ULL << (r * 8 + f));
+        if ((1ULL << (r * 8 + f)) & block) break;
+    }
+    for (int r = rank - 1, f = file - 1; r >= 0 && f >= 0; r--, f--)
+    {
+        attacks |= (1ULL << (r * 8 + f));
+        if ((1ULL << (r * 8 + f)) & block) break;
+    }
+
+    // return attack map
+    return attacks;
+}
+
+// generate rook attacks with a blocker board
+U64 rookAttacksWithBlocker(int square, U64 block)
+{
+    // result attacks bitboard
+    U64 attacks = 0ULL;
+
+    // init target rank & files
+    int rank = square / 8;
+    int file = square % 8;
+
+    // generate rook attacks
+    for (int r = rank + 1; r <= 7; r++)
+    {
+        attacks |= (1ULL << (r * 8 + file));
+        if ((1ULL << (r * 8 + file)) & block) break;
+    }
+    for (int r = rank - 1; r >= 0; r--)
+    {
+        attacks |= (1ULL << (r * 8 + file));
+        if ((1ULL << (r * 8 + file)) & block) break;
+    }
+    for (int f = file + 1; f <= 7; f++)
+    {
+        attacks |= (1ULL << (rank * 8 + f));
+        if ((1ULL << (rank * 8 + f)) & block) break;
+    }
+    for (int f = file - 1; f >= 0; f--)
+    {
+        attacks |= (1ULL << (rank * 8 + f));
+        if ((1ULL << (rank * 8 + f)) & block) break;
+    }
+
+    // return attack map
     return attacks;
 }
 
