@@ -37,6 +37,14 @@ int count_bits(U64 bitboard)
     return count;
 }
 
+int get1BitIndex(U64 bitboard)
+{
+    // make sure bitboard is not 0
+    if (bitboard)
+        return count_bits((bitboard & -bitboard) - 1);
+    else return -1;
+}
+
 U64 Board::generateBoardWithOneFile(int file) {
     U64 bitboard = 0ULL;
     for (int i = 0; i < 8; ++i) {

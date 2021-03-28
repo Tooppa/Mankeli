@@ -18,6 +18,7 @@ public:
     void initAttacks();                                 // Fills appropriate attack tables
     void printBitBoard(U64);                            // Prints a bitboard from a U64(unsigned long long) value
     int count_bits(U64 bitboard);                       // Counts bits of a bitboard
+    int get1BitIndex(U64 bitboard);                     // get least significant 1st bit index
 
 private:
     U64 _bitBoards[12];                                 // Stores bitboards for every peace for both colors
