@@ -7,6 +7,6 @@ int main()
 {
     Board test;
 
-    test.printBitBoard(test.generateBishopAttacks(d5));
+    test.printBitBoard(test.generateRookAttacks(e3));
     return 0;
 }

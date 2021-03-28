@@ -150,6 +150,27 @@ U64 Board::generateBishopAttacks(int square) {
     return attacks;
 }
 
+U64 Board::generateRookAttacks(int square) {
+    // init empty boards
+    U64 attacks = 0ULL;
+
+    // get rank and file
+    int rank = square / 8;
+    int file = square % 8;
+
+    // generate rook attacks with out bits from the corners (2 -> 7 and b -> g)
+    for (int i = rank + 1; i < 7; i++)
+        attacks |= (1ULL << (i * 8 + file));
+    for (int i = rank - 1; i > 0; i--)
+        attacks |= (1ULL << (i * 8 + file));
+    for (int i = file + 1; i < 7; i++)
+        attacks |= (1ULL << (rank * 8 + i));
+    for (int i = file - 1; i > 0; i--)
+        attacks |= (1ULL << (rank * 8 + i));
+
+    return attacks;
+}
+
 
 
 void Board::initAttacks()

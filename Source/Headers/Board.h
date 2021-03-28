@@ -11,6 +11,7 @@ public:
     U64 generateKnightAttacks(int square);          // Generates knight attacks
     U64 generateKingAttacks(int square);            // Generates king attacks
     U64 generateBishopAttacks(int square);          // Generates bishop attacks
+    U64 generateRookAttacks(int square);            // Generates Rook attacks
     U64 generateBoardWithOneFile(int file);         // Generates an empty board with one of its files filled (with ones)
     void initAttacks();                             // Fills appropriate attack tables
     void printBitBoard(U64);                        // Prints a bitboard from a U64(unsigned long long) value
@@ -21,4 +22,5 @@ private:
     U64 _knightAttacks[64];                         // Stores all possible knight attacks
     U64 _kingAttacks[64];                           // Stores all possible king attacks
     U64 _bishopAttacks[64];                         // Stores all possible bishop attacks
+    U64 _rookAttacks[64];                           // Stores all possible rook attacks
 };
