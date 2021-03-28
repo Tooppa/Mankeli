@@ -5,12 +5,5 @@
 
 int main()
 {
-    Board test;
-
-    test.initAttacks();
-
-    // loop over 64 board squares
-    for (int square = 0; square < 64; square++)
-        test.printBitBoard(test.getPawnAttack(black, square));
     return 0;
 }

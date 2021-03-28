@@ -88,6 +88,32 @@ U64 Board::generateKnightAttacks( int square) {
     return attacks;
 }
 
+U64 Board::generateKingAttacks(int square) {
+    // init empty boards
+    U64 attacks = 0ULL;
+    U64 bitboard = 0ULL;
+
+    // bitboard where one or more lines are filled with ones
+    U64 aFile = generateBoardWithOneFile(A);
+    U64 hFile = generateBoardWithOneFile(H);
+
+    // set piece on the board
+    setBit(bitboard, square);
+
+    // generate king attacks
+    if (bitboard >> 8) attacks |= (bitboard >> 8);
+    if ((bitboard >> 9) & ~hFile) attacks |= (bitboard >> 9);
+    if ((bitboard >> 7) & ~aFile) attacks |= (bitboard >> 7);
+    if ((bitboard >> 1) & ~hFile) attacks |= (bitboard >> 1);
+    if (bitboard << 8) attacks |= (bitboard << 8);
+    if ((bitboard << 9) & ~aFile) attacks |= (bitboard << 9);
+    if ((bitboard << 7) & ~hFile) attacks |= (bitboard << 7);
+    if ((bitboard << 1) & ~aFile) attacks |= (bitboard << 1);
+
+    return attacks;
+}
+
+
 void Board::initAttacks()
 {
     // loop over 64 board squares
@@ -99,9 +125,8 @@ void Board::initAttacks()
 
         // knight attacks
         _knightAttacks[square] = generateKnightAttacks(square);
-    }
-}
 
-U64 Board::getPawnAttack(int color, int square) {
-    return _pawnAttacks[color][square];
+        // king attacks
+        _kingAttacks[square] = generateKingAttacks(square);
+    }
 }
