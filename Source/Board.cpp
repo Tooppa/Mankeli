@@ -22,7 +22,7 @@ void Board::printBitBoard(U64 bitboard) {
     std::cout << "\n    a b c d e f g h\n\n";
 }
 
-int count_bits(U64 bitboard)
+int Board::count_bits(U64 bitboard)
 {
     // counter
     int count = 0;
@@ -37,7 +37,7 @@ int count_bits(U64 bitboard)
     return count;
 }
 
-int get1BitIndex(U64 bitboard)
+int Board::get1BitIndex(U64 bitboard)
 {
     // make sure bitboard is not 0
     if (bitboard)
@@ -174,7 +174,7 @@ U64 Board::generateBishopAttacks(int square) {
 }
 
 // generate bishop attacks with a blocker board
-U64 bishopAttacksWithBlocker(int square, U64 block)
+U64 Board::bishopAttacksWithBlocker(int square, U64 block)
 {
     // result attacks bitboard
     U64 attacks = 0ULL;
@@ -210,7 +210,7 @@ U64 bishopAttacksWithBlocker(int square, U64 block)
 }
 
 // generate rook attacks with a blocker board
-U64 rookAttacksWithBlocker(int square, U64 block)
+U64 Board::rookAttacksWithBlocker(int square, U64 block)
 {
     // result attacks bitboard
     U64 attacks = 0ULL;
