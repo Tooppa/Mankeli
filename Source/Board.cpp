@@ -266,6 +266,24 @@ U64 Board::generateRookAttacks(int square) {
     return attacks;
 }
 
+U64 Board::setOccupancy(int index, int bitMask, U64 attackMask)
+{
+    U64 occupancy = 0ULL;
+
+    for (int count = 0; count < bitMask; count++)
+    {
+        // get 1 bit index of attacks mask
+        int square = get1BitIndex(attackMask);
+        popBit(attackMask, square);
+
+        // check that it is iside the board
+        if (index & (1 << count))
+            // populate occupancy map
+            occupancy |= (1ULL << square);
+    }
+    return occupancy;
+}
+
 
 
 void Board::initAttacks()
