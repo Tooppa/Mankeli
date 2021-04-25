@@ -22,7 +22,7 @@ void Board::printBitBoard(U64 bitboard) {
     std::cout << "\n    a b c d e f g h\n\n";
 }
 
-int Board::count_bits(U64 bitboard)
+int Board::countBits(U64 bitboard)
 {
     // counter
     int count = 0;
@@ -41,7 +41,7 @@ int Board::get1BitIndex(U64 bitboard)
 {
     // make sure bitboard is not 0
     if (bitboard)
-        return count_bits((bitboard & -bitboard) - 1);
+        return countBits((bitboard & -bitboard) - 1);
     else return -1;
 }
 
