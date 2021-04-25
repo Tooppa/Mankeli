@@ -4,22 +4,12 @@
 #pragma once
 #include <iostream>
 #include "Enums.h"
+#include "Namespaces/Attacks.cpp"
 
 class Board {
 public:
-    U64 generatePawnAttacks(int color, int square);             // Generates a pawn attack from color and a square
-    U64 generateKnightAttacks(int square);                      // Generates knight attacks
-    U64 generateKingAttacks(int square);                        // Generates king attacks
-    U64 generateBishopAttacks(int square);                      // Generates bishop attacks
-    U64 generateRookAttacks(int square);                        // Generates Rook attacks
-    U64 bishopAttacksWithBlocker(int square, U64 block);        // Generates bishop attacks with blocker board
-    U64 rookAttacksWithBlocker(int square, U64 block);          // Generates rook attacks with blocker board
-    U64 generateBoardWithOneFile(int file);                     // Generates an empty board with one of its files filled (with ones)
     void initAttacks();                                         // Fills appropriate attack tables
-    void printBitBoard(U64);                                    // Prints a bitboard from a U64(unsigned long long) value
-    int countBits(U64 bitboard);                                // Counts bits of a bitboard
-    int get1BitIndex(U64 bitboard);                             // Get least significant 1st bit index
-    U64 setOccupancy(int index, int bitMask, U64 attackMask);   // Generate occupancy map
+    void printBitBoard(U64);                                    // Print bitboard
 
 private:
     U64 _bitBoards[12];                                         // Stores bitboards for every peace for both colors
