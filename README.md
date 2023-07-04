@@ -1,2 +1,2 @@
 # Mankeli
-Chess engine (in development).
+Chess engine learning experiment
